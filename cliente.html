@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pedido de Agua</title>
+
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      background: #f4f6f9;
+    }
+
+    header {
+      background: #0d6efd;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+
+    .container {
+      padding:20px;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #0d6efd;
+    }
+
+    button {
+      background: #0d6efd;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:disabled {
+      background: #999;
+    }
+
+    #mensaje {
+      margin-top: 10px;
+      font-weight: bold;
+      text-align: center;
+    }
+    input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+::placeholder {
+  color: #999;
+}
+    
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>💧 Pedir Agua</h1>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h2>Hacer Pedido</h2>
+
+    <input type="text" id="nombre" placeholder="Nombre">
+    <input type="text" id="direccion" placeholder="Dirección">
+    <input type="number" id="bidones" placeholder="Bidones">
+    <button id="btnPedido" onclick="enviarPedido()">Enviar Pedido</button>
+
+<div id="mensaje" style="color:rgb(0, 0, 0); font-weight:bold; margin-top:10px;"></div>  </div>
+</div>
+
+<script>
+  
+// 👉 IMPORTANTE (MISMA URL QUE ADMIN)
+const URL = "http://localhost:3000";
+// si usás celular:
+
+
+
+ function validarFormulario(nombre, direccion, bidones){
+  let msg = document.getElementById("mensaje");
+console.log(msg);
+ 
+  
+
+  msg.innerText = "";
+
+  if(nombre.trim() === ""){
+    msg.innerText = "⚠️ Ingresá tu nombre";
+    return false;
+  }
+
+  if(direccion.trim() === ""){
+    msg.innerText = "⚠️ Ingresá tu dirección";
+    return false;
+  }
+
+  if(bidones <= 0 || isNaN(bidones)){
+    msg.innerText = "⚠️ Ingresá cantidad válida";
+    return false;
+  }
+
+  return true;
+}
+   
+
+
+
+function enviarPedido(){
+
+  let nombre = document.getElementById("nombre").value;
+  let direccion = document.getElementById("direccion").value;
+  let bidones = parseInt(document.getElementById("bidones").value);
+
+  if(!validarFormulario(nombre, direccion, bidones)){
+  return;
+}
+
+  
+  fetch(URL + "/pedido", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ nombre, direccion, bidones })
+})
+.then(() => {
+
+  let msg = document.getElementById("mensaje");
+
+  msg.innerText = "✅ Pedido enviado";
+
+  // 🔥 desaparece solo
+  setTimeout(() => {
+    msg.innerText = "";
+  }, 1000);
+
+  // limpiar campos
+  document.getElementById("nombre").value = "";
+  document.getElementById("direccion").value = "";
+  document.getElementById("bidones").value = "";
+});
+  }
+
+
+
+
+  
+</script>
+
+</body>
+</html>
