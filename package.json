@@ -2,10 +2,10 @@
   "name": "pagina-agua",
   "version": "1.0.0",
   "description": "",
-  "main": "miserver.js",
-  "scripts": {
-    "start": "node miserver.js"
-  },
+ "main": "miserver.js",
+"scripts": {
+  "start": "node miserver.js"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
