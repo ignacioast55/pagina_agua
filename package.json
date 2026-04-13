@@ -1,5 +1,5 @@
 {
-  "name": "pagina-agua",
+  "name": "pagina_agua",
   "version": "1.0.0",
   "main": "miserver.js",
   "scripts": {
