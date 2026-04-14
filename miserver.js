@@ -70,7 +70,7 @@ app.put("/pedido/:id", async (req, res) => {
 
 // SERVER
 const PORT = process.env.PORT || 3000;
-
+app.use(express.static(__dirname));
 app.listen(PORT, () => {
   console.log(`🚀 Servidor en puerto ${PORT}`);
 });
